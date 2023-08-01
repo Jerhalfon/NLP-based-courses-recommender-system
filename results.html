@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Course Recommendation Results</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Get the list of titles, levels, and categories
+      var titles = {{ data.courses|tojson }};
+      var urls = {{ data.urls|default([])|tojson }};
+      var categories = {{ data.categories|tojson }};
+      var prices = {{ data.prices|tojson }};
+      var levels = {{ data.levels|tojson }};
+      
+      // Prepend "www.udemy.com" to each URL
+      urls = urls.map(function(url) {
+        return "https://www.udemy.com" + url;
+      });
+      
+      // Display courses initially
+      displayCourses(titles, urls, categories, prices, levels);
+      
+      // Populate category filter options
+      populateFilterOptions(categories);
+      
+      // Handle category filter change event
+      $('#category-filter-dropdown').on('change', function() {
+        filterCourses();
+      });
+      
+        // Function to display courses
+        function displayCourses(titles, urls, categories, prices, levels) {
+          var courseList = $('#course-list');
+          courseList.empty();
+
+          for (var i = 0; i < titles.length; i++) {
+            var listItem = $('<li>').addClass('course-item');
+            var link = $('<a>').attr('href', urls[i]).attr('target', '_blank').text(titles[i]);
+            var courseItem = $('<div>').addClass('course-title').append(link);
+            var detailsContainer = $('<div>').addClass('details-container');
+            var categoryItem = $('<div>').addClass('category').text(categories[i]);
+            var priceItem = $('<div>').addClass('price').text(prices[i]);
+            var levelItem = $('<div>').addClass('level').text(levels[i]);
+
+            // Assign custom data attribute to store the category value
+            listItem.attr('data-category', categories[i]);
+
+            detailsContainer.append(levelItem).append(priceItem);
+            listItem.append(courseItem).append(detailsContainer);
+            courseList.append(listItem);
+          }
+        }
+      
+      // Function to populate category filter options
+      function populateFilterOptions(categories) {
+        var filterDropdown = $('#category-filter-dropdown');
+        filterDropdown.empty();
+          
+        var uniqueCategories = [...new Set(categories)];
+        
+        var allOption = $('<option>').attr('value', 'all').text('All Categories');
+        filterDropdown.append(allOption);
+        
+        for (var i = 0; i < uniqueCategories.length; i++) {
+          var categoryOption = $('<option>').attr('value', uniqueCategories[i]).text(uniqueCategories[i]);
+          filterDropdown.append(categoryOption);
+        }
+      }
+
+        // Function to filter courses based on selected category
+        function filterCourses() {
+          var selectedCategory = $('#category-filter-dropdown').val();
+          var courseItems = $('.course-item');
+
+          courseItems.each(function () {
+            var courseItem = $(this);
+            var category = courseItem.attr('data-category'); // Retrieve category value from the custom data attribute
+
+            if (selectedCategory === 'all' || category === selectedCategory) {
+              courseItem.show();
+            } else {
+              courseItem.hide();
+            }
+          });
+        }
+    });
+  </script>
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      font-family: "Arial", sans-serif;
+      color: #333;
+      text-align: center;
+    }
+
+    #course-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .course-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .course-title {
+      flex-grow: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+    }
+
+    .details-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    .level,
+    .price {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-left: 10px; /* Add margin-left for spacing */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Recommended Courses</h1>
+    <div class="filter-section">
+      <label for="category-filter-dropdown">Filter by Category:</label>
+      <select id="category-filter-dropdown"></select>
+    </div>
+    <ul id="course-list"></ul>
+  </div>
+</body>
+</html>

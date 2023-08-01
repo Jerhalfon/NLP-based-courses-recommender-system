@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Course Recommendation Form</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Additional custom styles */
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to Course Recommendation!</h1>
+    <form action="{{ url_for('submit') }}" method="post">
+      <div class="form-group">
+        <label for="subject">Which was your favourite subject in school?</label>
+        <textarea class="form-control" name="subject" id="subject" rows="5" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="technology">Do you use technology in your day to day? Give some examples on how you do so.</label>
+        <textarea class="form-control" name="technology" id="technology" rows="5" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="problem">Are there any specific problems that you are passionate about? How would you tackle them?</label>
+        <textarea class="form-control" name="problem" id="problem" rows="5" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="problem">What do you like doing on your free time?</label>
+        <textarea class="form-control" name="problem" id="problem" rows="5" required></textarea>
+      </div>
+        
+      <div class="form-group">
+        <label for="problem">Are you involved in any extracurricular activities or clubs? If yes, please provide details.</label>
+        <textarea class="form-control" name="problem" id="problem" rows="5" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="problem">What would be your ideal day at work?</label>
+        <textarea class="form-control" name="problem" id="problem" rows="5" required></textarea>
+      </div>        
+        
+      <div class="form-group">
+        <label for="problem">Are you interested in learning new skills or improving existing ones? If yes, which ones?</label>
+        <textarea class="form-control" name="problem" id="problem" rows="5" required></textarea>
+      </div>
+        
+      <div class="form-group">
+        <label for="problem">Are there any specific industries or fields that intrigue you? Please mention.</label>
+        <textarea class="form-control" name="problem" id="problem" rows="5" required></textarea>
+      </div> 
+        
+      <div class="form-group">
+        <label for="problem">Have you worked on any personal projects or initiatives? If yes, please describe.</label>
+        <textarea class="form-control" name="problem" id="problem" rows="5" required></textarea>
+      </div>  
+        
+      <div class="form-group">
+        <label for="problem">What type of problems do you enjoy tackling?.</label>
+        <textarea class="form-control" name="problem" id="problem" rows="5" required></textarea>
+      </div>
+        
+      <div class="form-group">
+        <label for="problem">What motivates you?</label>
+        <textarea class="form-control" name="problem" id="problem" rows="5" required></textarea>
+      </div>        
+             
+      <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    </form>
+  </div>
+  
+  <!-- Bootstrap JS (optional, if you need any Bootstrap JavaScript components) -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
